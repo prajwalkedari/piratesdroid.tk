@@ -12,3 +12,4 @@ var configgg = {
 
 firebase.initializeApp(configgg);
 var database = firebase.database(),
+    firebaseOrdersCollection = database.ref('Place');
