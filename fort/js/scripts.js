@@ -16,7 +16,7 @@ var configgg = {
     'appId': '1:782951610606:web:3d4616f53c370e23',
     'measurementId': 'G-5YHQPCK2F2'
 };
-var d1 =[];var d2 =[];var d3 =[];var d4 =[];var d5 =[];var d6 =[];var i =0;
+var d1 =[];var d2 =[];var d3 =[];var d4 =[];var d5 =[];var d6 =[];var i =0;var imgg =[];imat =[];
 // var i=0;src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
 function addhtmll(id,name,addres,states,latitude,longitude){
     d1.push(id);d2.push(addres);d3.push(name);d4.push(states);d5.push(latitude); d6.push(longitude);
@@ -45,9 +45,9 @@ i+=1;
 // firebaseOrdersCollection.on('value',function(dat){ dat.forEach( function (abc) {var aa = abc.val(); console.log(aa.ID+","+aa.Address+","+aa.State+","+aa.latitude+","+aa.longitude) } ) })
 function getPicture(af) {
             
-    fetch('https://en.m.wikipedia.org/w/api.php?action=query&format=json&prop=pageimages%7Cpageterms&formatversion=2&piprop=original%7Cthumbnail&pithumbsize=350&titles='+d2[af].replace(" ","%20"))
+    fetch('https://en.m.wikipedia.org/w/api.php?origin=*&action=query&format=json&prop=pageimages%7Cpageterms&formatversion=2&piprop=original%7Cthumbnail&pithumbsize=350&titles='+d1[af].replace("_","%20"))
     .then(response=>response.json())
-    .then(data => {if(data.query.pages.thumbnail.source){ document.getElementById(d1[af]).src= data.query.pages.thumbnail.source} ;});
+    .then(data => {try{ document.getElementById(d1[af]).src= data.query.pages[0].thumbnail.source;imgg.push(data.query.pages[0].original.source);imat.push(data.query.pages[0].thumbnail.source)}catch(err){imgg.push(" ");imat.push(" ");console.log("img not found")} ;});
   }
 firebase.initializeApp(configgg);
 var database = firebase.database(),
@@ -70,10 +70,21 @@ var database = firebase.database(),
     // fetch('https://en.wikipedia.org/w/api.php?action=query&format=json&list=allimages&ailimit=1&aifrom='+d1[1])
     // .then(response=>response.json())
     // .then(data => {  if(data.total=!0){img.push(data.urls.small);console.log(data.urls.small)}});
+    var details="";
     function popdata(a) {
-        document.getElementById("mTitle").innerText= d2[a];
+        document.getElementById("mTitle").innerText= d3[a];
+        document.getElementById("Mbody").innerHTML ='<center><img src="'+imgg[a]+'" alt="📷image is not available"width="60%" ><br><p id="mm"></p></center>';
         fetch('https://en.wikipedia.org/w/api.php?format=json&origin=*&action=query&prop=extracts&exintro&explaintext&redirects=1&titles='+d1[a]).then(response=>response.json())
-        .then(data => {var aaa=data.query.pages;document.getElementById("Mbody").innerText=Object.values(aaa)[0].extract;});
+        .then(data => {var aaa=data.query.pages;document.getElementById("mm").innerHTML+= Object.values(aaa)[0].extract;});
+        document.getElementById("Mbody").innerHTML += "<center><h3>Address</h3></center>";
+        document.getElementById("Mbody").innerHTML += "<center><p>"+d2[a]+"</p></center>";
+        
        
       }
     //   document.getElementById("Mbody").innerText += data.query[0].extract
+    function clr(){
+        document.getElementById("mTitle").innerText= " ";
+        document.getElementById("Mbody").innerHTML = "";
+
+
+    }
