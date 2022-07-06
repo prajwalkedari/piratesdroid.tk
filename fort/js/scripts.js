@@ -45,7 +45,7 @@ i+=1;
 // firebaseOrdersCollection.on('value',function(dat){ dat.forEach( function (abc) {var aa = abc.val(); console.log(aa.ID+","+aa.Address+","+aa.State+","+aa.latitude+","+aa.longitude) } ) })
 function getPicture(af) {
             
-    fetch('https://en.m.wikipedia.org/w/api.php?action=query&format=json&prop=pageimages%7Cpageterms&formatversion=2&piprop=original%7Cthumbnail&pithumbsize=350&titles='+d1[a])
+    fetch('https://en.m.wikipedia.org/w/api.php?action=query&format=json&prop=pageimages%7Cpageterms&formatversion=2&piprop=original%7Cthumbnail&pithumbsize=350&titles='+d1[af])
     .then(response=>response.json())
     .then(data => {if(data.query.pages.thumbnail.source){ document.getElementById(d1[af]).src= data.query.pages.thumbnail.source} ;});
   }
