@@ -45,9 +45,9 @@ i+=1;
 // firebaseOrdersCollection.on('value',function(dat){ dat.forEach( function (abc) {var aa = abc.val(); console.log(aa.ID+","+aa.Address+","+aa.State+","+aa.latitude+","+aa.longitude) } ) })
 function getPicture(af) {
             
-    fetch('https://en.wikipedia.org/w/api.php?action=query&origin=*&format=json&list=allimages&ailimit=1&aifrom='+d1[1])
+    fetch('https://en.m.wikipedia.org/w/api.php?action=query&format=json&prop=pageimages%7Cpageterms&formatversion=2&piprop=original%7Cthumbnail&pithumbsize=350&titles='+d1[1].replace(" ","%20")
     .then(response=>response.json())
-    .then(data => { document.getElementById(d1[af]).src= data.query.allimages[0].url;console.log(data.query.allimages[0].url)});
+    .then(data => { document.getElementById(d1[af]).src= data.query.pages.thumbnail.source;alert(data.query.pages.thumbnail.source+">=<"+data.batchcomplete)});
   }
 firebase.initializeApp(configgg);
 var database = firebase.database(),
@@ -58,7 +58,7 @@ var database = firebase.database(),
                 var datas = dread.val();
                 addhtmll(datas.ID,datas.name,datas.Address,datas.State,datas.latitude,datas.longitude); 
              })
-            //  for(var i =0;i<=20;i++){getPicture(i)}
+              for(var i =0;i<=3;i++){getPicture(i)}
         })
 
 
