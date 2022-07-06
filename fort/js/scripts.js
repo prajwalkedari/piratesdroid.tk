@@ -73,7 +73,7 @@ var database = firebase.database(),
     var details="";
     function popdata(a) {
         document.getElementById("mTitle").innerText= d3[a];
-        document.getElementById("Mbody").innerHTML ='<center><img src="'+imgg[a]+'" alt="📷image is not available"width="60%" ><br><p id="mm"></p></center>';
+        document.getElementById("Mbody").innerHTML ='<center><img src="'+imgg[a]+'" alt="📷image is not available"width="65%" ><br><p id="mm"></p></center>';
         fetch('https://en.wikipedia.org/w/api.php?format=json&origin=*&action=query&prop=extracts&exintro&explaintext&redirects=1&titles='+d1[a]).then(response=>response.json())
         .then(data => {var aaa=data.query.pages;document.getElementById("mm").innerHTML+= Object.values(aaa)[0].extract;});
         document.getElementById("Mbody").innerHTML += "<center><h3>Address</h3></center>";
